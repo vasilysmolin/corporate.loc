@@ -17,7 +17,7 @@
                 $builder ->take($take);
             }
 
-            // для страниц отдельной категории
+            // для страниц отдельной категории ?
             if($where){
                 $builder->where($where[0],$where[1] );
             }
@@ -42,6 +42,11 @@
                 }
                 return $item;
             });
+            return $result;
+        }
+
+        public function one($alias, $attr = array()){
+            $result = $this->model->where('alias', $alias)->first();
             return $result;
         }
     }

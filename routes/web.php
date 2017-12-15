@@ -18,7 +18,7 @@ Route::resource('/','IndexController',[
     ]
 
 ]);
-// почему для них тоже ресурс?
+// почему для них он создавал ресурсы?
 Route::resource('portfolios','PortfolioController',[
     'parameters' =>[
         'portfolios' => 'alias'
@@ -30,7 +30,8 @@ Route::resource('articles','ArticlesController',[
             'articles' => 'alias'
         ]
     ]);
-// заработал
+
+// для странциы категорий?
 Route::get('articles/cat/{cat_alias}',['uses'=>'ArticlesController@index', 'as'=>'articlesCat']);
 
 

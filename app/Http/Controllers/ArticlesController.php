@@ -96,6 +96,28 @@ class ArticlesController extends SiteController
         return $articles;
     }
 
+    public function show($alias = FALSE){
+
+        //формируем подробную статью
+        $article = $this->a_rep->one($alias,['comments' => TRUE]);
+
+        if($article){
+            $article->img = json_decode($article->img);
+        }
+
+
+        $content = view(env('THEME').'.article_content')->with('article', $article)->render();
+        $this->vars= array_add($this->vars,'content',$content);
+
+        //формируем сайдбар
+        $comments = $this->getComments(config('settings.recent_comments'));
+        $portfolios = $this->getPortfolios(config('settings.recent_portfolios'));
+        $this->contentRightBar = view(env('THEME').'.articlesBar')->with(['comments'=> $comments,'portfolios'=>$portfolios]);
+
+        // отдаём на рендер гланосу котроллеру
+        return $this->renderOutput();
+    }
+
 
 
 
