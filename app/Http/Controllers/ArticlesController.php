@@ -83,7 +83,6 @@ class ArticlesController extends SiteController
             if($alias){
                 $id = Category::select('id')->where('alias',$alias)->first()->id;
                 $where = ['category_id', $id  ];
-//                dd($id);
             }
 
 
@@ -104,7 +103,7 @@ class ArticlesController extends SiteController
         if($article){
             $article->img = json_decode($article->img);
         }
-
+//        dd($article->comments->groupBy('parent_id'));
 
         $content = view(env('THEME').'.article_content')->with('article', $article)->render();
         $this->vars= array_add($this->vars,'content',$content);
