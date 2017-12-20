@@ -40,11 +40,11 @@ class CommentController extends SiteController
     public function store(Request $request)
     {
         //
-
         $data = $request->except('_token','comment_post_ID','comment_parent');
         $data['article_id'] = $request->input('comment_post_ID');
         $data['parent_id'] = $request->input('comment_parent');
 
+        // валидация данных
         $validator = Validator::make($data,[
 
             'article_id' => 'integer|required',
@@ -61,24 +61,43 @@ class CommentController extends SiteController
 
         if($validator->fails()){
 
-            return Response::json(['error'=>$validator->errors()->all()]);
+            return response()
+                ->json(['error'=>$validator->errors()->all()]);
 
         }
-
+        // получаем авторизованного пользователя
         $user = Auth::user();
-
+        // получаем новую модель комментария
         $comment = new Comment($data);
 
+        // если есть заполненная переменная юзер
         if($user){
+            // в поле комментария юзер id = user id
             $comment->user_id = $user->id;
         }
 
+        // в переменную пост получаем модель артикл и находим id из пост запроса
         $post = Article::find($data['article_id']);
 
+        // в модель пост, метод коммент сохраняем новую модель с данными
         $post->comments()->save($comment);
 
-        echo json_encode(['hello'=>'world']);
-        exit;
+        //получаем юзера если он есть
+        $comment->load('user');
+        $data['id'] = $comment->id;
+        $data['email'] = (!empty($data['email'])) ? $data['email'] : $comment->user->email;
+        $data['name'] = (!empty($data['name'])) ? $data['name'] : $comment->user->name;
+        $data['text'] = (!empty($data['text'])) ? $data['text'] : $comment->user->text;
+        $data['hash'] = md5($data['email']);
+
+        $view_comment = view(env('THEME').'.content_one_comment')->with('data', $data)->render();
+
+        // вернуть ответ в метод ajax для js
+//        return Response::json(['success'=>TRUE,'comment'=>$view_comment,'data'=> $data]);
+
+        return response()
+            ->json(['success'=>TRUE,'comment'=>$view_comment,'data'=> $data]);
+
 
     }
 

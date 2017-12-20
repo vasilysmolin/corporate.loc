@@ -36,5 +36,8 @@ Route::get('articles/cat/{cat_alias}',['uses'=>'ArticlesController@index', 'as'=
 
 Route::resource('comment','CommentController',['only' =>['store']]);
 
+//php artisan make:auth
+Route::get('login','Auth\AuthController@showLoginForm');
+
 
 
