@@ -37,4 +37,16 @@ Route::get('articles/cat/{cat_alias}',['uses'=>'ArticlesController@index', 'as'=
 Route::resource('comment','CommentController',['only' =>['store']]);
 
 
+Route::auth('login', 'Auth\LoginController@showLoginForm');
+Route::get('logout','Auth\LoginController@login');
+Route::get('logout','Auth\LoginController@logout');
 
+
+Route::group(['prefix' => 'admin','middleware' => 'auth'], function (){
+
+    Route::get('/', [
+        'uses'=>'Admin\IndexController@index',
+        'as' => 'adminIndex']);
+
+    Route::resource('/articles', 'Admin\ArticlesController');
+});
