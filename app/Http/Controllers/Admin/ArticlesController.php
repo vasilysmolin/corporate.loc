@@ -5,8 +5,25 @@ namespace Corp\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Corp\Http\Controllers\Controller;
 
-class ArticlesController extends Controller
+class ArticlesController extends AdminController
 {
+
+
+
+
+    public function __construct ()
+    {
+
+        parent::__construct();
+//       todo досмотреть урок по правам 30
+//       if(Gate::denies('VIEW_ADMIN')){
+//           return redirect()->route('adminIndex');
+//       }
+//
+//
+        $this->template = env('THEME').'.admin.index';
+
+    }
     /**
      * Display a listing of the resource.
      *

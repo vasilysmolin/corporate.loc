@@ -24,7 +24,7 @@ class IndexController extends AdminController
 //       }
 //
 //
-//       $this->template = env('THEME').'.admin.index';
+       $this->template = env('THEME').'.admin.index';
 
 }
 
