@@ -43,3 +43,6 @@ a img {border:none;}
 }
 
 *:focus { outline: none; }
+li{
+    list-style: none!important;
+}

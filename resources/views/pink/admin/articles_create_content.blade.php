@@ -6,50 +6,50 @@
     {!! Form::open(['url'=> (isset($article->id)) ? route('articles.update', ['articles'=>$article->alias]) : route('articles.store') ,'class'=>'form-horizontal', 'method'=>'POST','enctype'=>'multipart/form-data']) !!}
 
     <ul>
-        <li>
+        <li class="col-md-6">
             <label for="name-contact-us">
                 <span class="label">Название:</span><br/>
-                <span class="sublabel">Заголовок материала</span><br/>
+                <span class="sublabel">Название</span><br/>
 
             </label>
             <div class="input-prepend"><span class="add-on"><i class="icon-user"></i></span>
-                {!! Form::text('title', isset($article->title) ? $article->title : old('title'),['placeholder'=>'Введите название страницы']) !!}
+                {!! Form::text('title', isset($article->title) ? $article->title : old('title'),['class'=>'form-control ','placeholder'=>'Введите название страницы']) !!}
 
             </div>
         </li>
 
-        <li>
+        <li class="col-md-6">
             <label for="name-contact-us">
                 <span class="label">Ключевые слова:</span><br/>
-                <span class="sublabel">Заголовок материала</span><br/>
+                <span class="sublabel">Ключевые слова</span><br/>
 
             </label>
             <div class="input-prepend"><span class="add-on"><i class="icon-user"></i></span>
-                {!! Form::text('keywords', isset($article->keywords) ? $article->keywords : old('keywords'),['placeholder'=>'Введите ключевые слова']) !!}
+                {!! Form::text('keywords', isset($article->keywords) ? $article->keywords : old('keywords'),['class'=>'form-control','placeholder'=>'Введите ключевые слова']) !!}
 
             </div>
         </li>
 
-        <li>
+        <li class="col-md-6">
             <label for="name-contact-us">
                 <span class="label">Мета описания:</span><br/>
-                <span class="sublabel">Заголовок материала</span><br/>
+                <span class="sublabel">Мета описания</span><br/>
 
             </label>
             <div class="input-prepend"><span class="add-on"><i class="icon-user"></i></span>
-                {!! Form::text('meta_desc', isset($article->meta_desc) ? $article->meta_desc : old('meta_desc'),['placeholder'=>'Введите мета описания']) !!}
+                {!! Form::text('meta_desc', isset($article->meta_desc) ? $article->meta_desc : old('meta_desc'),['class'=>'form-control','placeholder'=>'Введите мета описания']) !!}
 
             </div>
         </li>
 
-        <li>
+        <li class="col-md-6">
             <label for="name-contact-us">
                 <span class="label">Псевдоним:</span><br/>
                 <span class="sublabel">Введите псевдомим</span><br/>
 
             </label>
             <div class="input-prepend"><span class="add-on"><i class="icon-user"></i></span>
-                {!! Form::text('alias', isset($article->alias) ? $article->alias : old('alias'),['placeholder'=>'Введите псевдоним']) !!}
+                {!! Form::text('alias', isset($article->alias) ? $article->alias : old('alias'),['class'=>'form-control','placeholder'=>'Введите псевдоним']) !!}
 
             </div>
         </li>
@@ -61,7 +61,7 @@
 
             </label>
             <div class="input-prepend"><span class="add-on"><i class="icon-user"></i></span>
-                {!! Form::textarea('desc', isset($article->desc) ? $article->desc : old('desc'),['placeholder'=>'Введите краткой описание']) !!}
+                {!! Form::textarea('desc', isset($article->desc) ? $article->desc : old('desc'),['id'=>'editor2','class'=>'form-control','placeholder'=>'Введите краткой описание']) !!}
             </div>
             <div class="msg-error"></div>
         </li>
@@ -73,7 +73,7 @@
 
             </label>
             <div class="input-prepend"><span class="add-on"><i class="icon-user"></i></span>
-                {!! Form::textarea('text', isset($article->text) ? $article->text : old('text'),['placeholder'=>'Введите описание']) !!}
+                {!! Form::textarea('text', isset($article->text) ? $article->text : old('text'),['id'=>'editor','class'=>'form-control','placeholder'=>'Введите описание']) !!}
             </div>
             <div class="msg-error"></div>
         </li>
@@ -89,7 +89,7 @@
 
         @endif
 
-        <li>
+        <li class="col-md-6">
             <label for="message-contact-us">
                 <span class="label">Изображение:</span><br/>
                 <span class="sublabel">Изображение описание</span><br/>
@@ -101,14 +101,14 @@
 
         </li>
 
-        <li>
+        <li class="col-md-6">
             <label for="message-contact-us">
                 <span class="label">Категория:</span><br/>
                 <span class="sublabel">Категория описание</span><br/>
 
             </label>
             <div class="input-prepend"><span class="add-on"><i class="icon-user"></i></span>
-                {!! Form::select('category_id', $categories, isset($article->category_id) ? $article->category_id : '') !!}
+                {!! Form::select('category_id', $categories, isset($article->category_id) ? $article->category_id : '', ['class' => 'form-control']) !!}
             </div>
 
         </li>
@@ -119,8 +119,8 @@
 
         @endif
 
-        <li class="submit-button">
-            {{ Form::submit('Сохранить'),['class'=>'btn'] }}
+        <li class="submit-button top-buffer col-md-6">
+            {{ Form::submit('Сохранить',['class'=>'btn btn-success']) }}
         </li>
 
     </ul>
