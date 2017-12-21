@@ -2,8 +2,13 @@
 
 namespace Corp\Http\Controllers\Admin;
 
+
+
+
 use Illuminate\Http\Request;
 use Corp\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
+
 
 class IndexController extends AdminController
 {
@@ -13,7 +18,13 @@ class IndexController extends AdminController
     {
 
        parent::__construct();
-       $this->template = env('THEME').'.admin.index';
+//       todo досмотреть урок по правам 30
+//       if(Gate::denies('VIEW_ADMIN')){
+//           return redirect()->route('adminIndex');
+//       }
+//
+//
+//       $this->template = env('THEME').'.admin.index';
 
 }
 
