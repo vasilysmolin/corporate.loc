@@ -25,4 +25,23 @@
 
         }
 
+        public function addArticle($request){
+
+//            if(Gate::denies('save',$this->model)){
+//                abort(403);
+//            }
+
+            $data = $request->except('_token','image');
+            if(empty($data)){
+                return array('error'=> 'Нет данных');
+            }
+
+            // транслитерация заголовка
+            if(empty($data['alias'])){
+                $data['alias'] = $this->transliterate($data['title']);
+            }
+                        dd($data);
+
+        }
+
     }
