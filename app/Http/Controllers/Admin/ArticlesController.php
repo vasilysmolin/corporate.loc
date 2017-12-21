@@ -2,8 +2,8 @@
 
 namespace Corp\Http\Controllers\Admin;
 
+use Corp\Repositories\ArticlesRepository;
 use Illuminate\Http\Request;
-use Corp\Http\Controllers\Controller;
 
 class ArticlesController extends AdminController
 {
@@ -11,17 +11,18 @@ class ArticlesController extends AdminController
 
 
 
-    public function __construct ()
+    public function __construct (ArticlesRepository $a_rep)
     {
 
         parent::__construct();
 //       todo досмотреть урок по правам 30
-//       if(Gate::denies('VIEW_ADMIN')){
+//       if(Gate::denies('VIEW_ADMIN_ARTICLES')){
 //           return redirect()->route('adminIndex');
 //       }
+        $this->a_rep = $a_rep;
 //
 //
-        $this->template = env('THEME').'.admin.index';
+        $this->template = env('THEME').'.admin.articles';
 
     }
     /**
@@ -32,7 +33,23 @@ class ArticlesController extends AdminController
     public function index()
     {
         //
+        $this->title = 'Менеджер статей';
+
+        //добавляем контент
+
+        $articles = $this->getArticles();
+        $this->content = view(env('THEME').'.admin.articles_content')->with('articles',$articles)->render();
+
+
+
+        return $this->renderOutput();
     }
+    public function getArticles()
+    {
+        return $this->a_rep->get();
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
