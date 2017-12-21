@@ -2,6 +2,7 @@
 
 namespace Corp\Http\Controllers\Admin;
 
+use Corp\Category;
 use Corp\Repositories\ArticlesRepository;
 use Illuminate\Http\Request;
 
@@ -44,11 +45,12 @@ class ArticlesController extends AdminController
 
         return $this->renderOutput();
     }
+
+
     public function getArticles()
     {
         return $this->a_rep->get();
     }
-
 
 
     /**
@@ -58,7 +60,29 @@ class ArticlesController extends AdminController
      */
     public function create()
     {
-        //
+
+        // проверка прав пользователя
+//        if(Gate::denise('save', new \corp\Article )){
+//            abort(403)
+//        }
+
+        $this->title = "Добавить новый материал";
+        $categories = Category::select(['title','alias','parent_id','id'])->get();
+        // пустой массив лист
+        $lists = array();
+        foreach($categories as $category){
+            // находим родителей и едем дальше
+            if($category->parent_id == 0){
+                $lists[$category->title] = array();
+            }
+            else{
+                // все формируется здесь
+                $lists[$categories->where('id',$category->parent_id)->first()->title][$category->id] = $category->title;
+            }
+        }
+        $this->content = view(env('THEME').'.admin.articles_create_content')->with('categories',$lists)->render();
+        return $this->renderOutput();
+
     }
 
     /**
